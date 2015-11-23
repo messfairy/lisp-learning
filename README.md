@@ -11,7 +11,9 @@ https://yoo2080.wordpress.com/2013/08/18/how-to-install-common-lisp-and-slime-on
 
 ##quicklisp
 (load "C:/my_programs/clisp_workspace/quicklisp.lisp")
+
 (quicklisp-quickstart:install :path "C:\\quicklisp\\")
+
 (ql:quickload "quicklisp-slime-helper")
 
 ##clisprc position：
