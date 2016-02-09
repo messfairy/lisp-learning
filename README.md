@@ -29,3 +29,6 @@ C:\Users\username\AppData\Roaming\.clisprc.lisp
 (setf temporary-file-directory "C:\\Users\\CaoLijuan\\AppData\\Local\\Temp")
 (setf (ext:getenv "temp") temporary-file-directory)
 (setf (ext:getenv "tmp") temporary-file-directory)
+
+##recommend emacs config
+https://github.com/purcell/emacs.d
