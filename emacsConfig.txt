@@ -1,0 +1,47 @@
+;;; Emacs is not a package manager, and here we load its package manager!
+(require 'package)
+(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
+               ("ELPA" . "HTTP://TROMEY.COM/ELPA/")
+                  ;; TODO: MAYBE, USE THIS AFTER EMACS24 IS RELEASEDAAA
+                  ;; (DEVELOPMENT VERSIONS OF PACKAGES)
+                  ("MELPA" . "HTTP://MELPA.MILKBOX.NET//")
+                  ))
+  (ADD-TO-LIST 'PACKAGE-ARCHIVES SOURCE T))
+(package-initialize)
+
+(load (expand-file-name "C:/my_programs/quicklisp/slime-helper.el"))
+;; Replace "sbcl" with the path to your implementation
+(setq inferior-lisp-program "sbcl")
+(put 'upcase-region 'disabled nil)
+
+;; JAVASCRIPT-MODE
+;; js2-mode provides 4 level of syntax highlighting. They are * 0 or a negative value means none. * 1 adds basic syntax highlighting. * 2 adds highlighting of some Ecma built-in properties. * 3 adds highlighting of many Ecma built-in functions.
+(setq js2-highlight-level 3)
+
+(add-hook 'js2-mode-hook
+    (lambda ()
+        (local-set-key (kbd "C-j") 'ac-js2-jump-to-definition)
+        (local-set-key (kbd "C-c C-n") 'js2-next-error)
+        (define-key js2-mode-map (kbd "C-j") 'ac-js2-jump-to-definition)
+        (linum-mode)
+        (js2-reparse t)
+        (ac-js2-mode)))
+
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
+(require 'js2-refactor)
+(js2r-add-keybindings-with-prefix "C-c C-m")
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
+(add-hook 'js2-mode-hook 'ac-js2-setup-auto-complete-mode)
+
+(add-to-list 'load-path "C:/my_programs/tern/emacs/")
+(autoload 'tern-mode "tern.el" nil t)
+(add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+
+(eval-after-load 'tern
+   '(progn
+      (require 'tern-auto-complete)
+      (tern-ac-setup)))
+	  
+(global-auto-complete-mode t)
